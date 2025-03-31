@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
+import MisProyectos from "./MisProyectos"
 import { PaperProvider } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,7 @@ const HomeNavegacion = (props) => {
             }}>
                 <Tab.Screen
                     name="Home"
-                    component={Home}
+                    component={MisProyectos}
                     options={{
                         title: "Home",
                         tabBarLabel: "Home",

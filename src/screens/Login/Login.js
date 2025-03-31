@@ -31,7 +31,7 @@ export default function Login(props) {
     if (email === '' || password === '') {
       Alert.alert('ERROR', 'Please fill in all fields');
     } else if (emailHasErrors() || contrasenyaHasErrors()) {
-      Alert.alert('Invalid data');
+      Alert.alert('ERROR', 'Invalid data');
     } else {
       props.navigation.navigate('Navegacion');
     }
@@ -52,7 +52,7 @@ export default function Login(props) {
 
             <View style={styles.inputContainer}>
               <Text style={styles.title}>Bienvenido!</Text>
-              
+    
               <TextInput
                 style={styles.input}
                 placeholder="Introduce el Email"
@@ -95,11 +95,10 @@ export default function Login(props) {
                 onPress={() => {
                   props.navigation.navigate('Registrar');
                 }}>
-                <Text style={{ ...styles.textRegister, color: '#33FF00' }}>
-                  Registrate
-                </Text>
+                  <Text style={{ ...styles.textRegister, color: '#33FF00' }}> Registrate </Text>
               </Pressable>
             </View>
+            
           </View>
         </View>
       </View>
