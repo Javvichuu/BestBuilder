@@ -1,11 +1,11 @@
-package repository;
+package bestbuilder.repository;
 
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-import model.Usuario;
+import bestbuilder.model.Usuario;
 
 public interface UsuarioRepository extends MongoRepository<Usuario, String> {
 	@Query("{'correo': ?0, 'contrasenya': ?1}")

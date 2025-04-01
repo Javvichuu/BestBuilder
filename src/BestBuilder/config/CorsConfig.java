@@ -1,4 +1,4 @@
-package config;
+package bestbuilder.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ public class CorsConfig {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/BestBuilder/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE")
+				registry.addMapping("/bestbuilder/**").allowedOrigins("*").allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*");
 			}
 		};

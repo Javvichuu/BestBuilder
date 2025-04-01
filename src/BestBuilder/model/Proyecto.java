@@ -1,8 +1,9 @@
-package model;
+package bestbuilder.model;
 
 
 import org.springframework.data.annotation.Id;
-
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document(collection= "proyecto")
 public class Proyecto {
 	@Id
 	private String id;

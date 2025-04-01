@@ -1,4 +1,4 @@
-package model;
+package bestbuilder.model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +20,13 @@ public class Usuario {
 	private List<String> proyectosCreados;
 	private boolean verificado;
 	private String codigo;
+
+	public Usuario(String nombre, String contrasenya, String correo) {
+		super();
+		this.nombre = nombre;
+		this.contrasenya = contrasenya;
+		this.correo = correo;
+	}
 
 	public String getId() {
 		return id;

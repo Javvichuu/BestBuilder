@@ -1,4 +1,4 @@
-package controller;
+package bestbuilder.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.mail.MessagingException;
 
-import model.Proyecto;
-import model.Usuario;
-import repository.UsuarioRepository;
+import bestbuilder.model.Usuario;
+import bestbuilder.model.Proyecto;
+import bestbuilder.repository.UsuarioRepository;
 
 @RestController
 public class Controller {
@@ -35,11 +36,62 @@ public class Controller {
 	@Value("${app.rutina.key_nombre}")
 	private String claveRutina;
 
-	@Value("${ip_api_optima}")
+	@Value("${ip_api_bestbuilder}")
 	private String ipAPI;
 
+	@GetMapping("/ok")
+	public ResponseEntity<Object> ok() {
+		System.out.println("dasdfa");
+		return ResponseEntity.ok().body("hola");
+	}
+	
+	@PostMapping("/bestbuilder/registrar")
+	ResponseEntity<Object> registrar(@RequestBody String body)
+			throws NoSuchAlgorithmException, MessagingException, IOException {
+		JSONObject cuerpo = new JSONObject(body);
+		String usuario = (String) cuerpo.get("usuario");
+		String contrasenya = (String) cuerpo.get("contrasenya");
+		String correo = (String) cuerpo.get("correo");
+		JSONObject response = new JSONObject();
+		if (usuarioRepository.findByCorreo(correo.toLowerCase()).isPresent()) {
+			response.put("message", "USER ALREADY REGISTERED");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response.toString());
+		} else {
+			Usuario user = new Usuario(usuario,contrasenya,correo);
+			user.setCorreo(correo.toLowerCase());
+			user.setContrasenya(user.encriptacionContrasenya(contrasenya));
+			usuarioRepository.save(user);
+				
+			response.put("message", "Felicidades te has registrado correctamente!");
+			return ResponseEntity.ok().body(response.toString());
+		}
+	}
+	
+	@PostMapping("/bestbuilder/login")
+	ResponseEntity<Object> login(@RequestBody Usuario usuarioLogin) throws NoSuchAlgorithmException {
+
+		Optional<Usuario> usuarioBaseDatos = usuarioRepository.comprobarLogin(usuarioLogin.getCorreo(),
+				usuarioLogin.encriptacionContrasenya(usuarioLogin.getContrasenya()));
+		JSONObject response = new JSONObject();
+		if (usuarioBaseDatos.isPresent()) {
+			Usuario usuari = usuarioBaseDatos.get();
+			if (usuari.getVerificado()) {
+				String token = UUID.randomUUID().toString();
+				usuari.setToken(token);
+				usuarioRepository.save(usuari);
+				response.put("token", token);
+				return ResponseEntity.status(HttpStatus.OK).body(response.toString());
+			}
+			response.put("message", "UNVERIFIED USER");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response.toString());
+		} else {
+			response.put("message", "USER IS NOT REGISTERED");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response.toString());
+		}
+	}
+	
 	// USUARIOS LOGIN / LOGOUT / VERIFICAR / REGISTRAR
-	@GetMapping("/optima/tokenUsuario")
+	@GetMapping("/bestbuilder/tokenUsuario")
 	public ResponseEntity<Object> obtenerToken(@RequestParam(value = "token") String token) {
 		Optional<Usuario> usuarioBaseDatos = usuarioRepository.findByToken(token);
 		if (usuarioBaseDatos.isPresent()) {
@@ -49,7 +101,7 @@ public class Controller {
 		}
 	}
 
-	@GetMapping("/optima/obtenerUsuario")
+	@GetMapping("/bestbuilder/obtenerUsuario")
 	public ResponseEntity<Object> obtenerUsuario(@RequestParam(value = "token") String token,
 			@RequestParam(value = "correo") String correo) {
 		Optional<Usuario> usuarioBaseDatos = usuarioRepository.findByToken(token);
@@ -61,7 +113,7 @@ public class Controller {
 		}
 	}
 
-	@GetMapping("/optima/verificar")
+	@GetMapping("/bestbuilder/verificar")
 	public ResponseEntity<Object> verificarCorreo(@RequestParam(value = "correo") String correo) {
 		Optional<Usuario> usuario = usuarioRepository.findByCorreo(correo);
 		if (usuario.isPresent()) {
@@ -73,7 +125,7 @@ public class Controller {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
-	@GetMapping("/optima/codigo")
+	@GetMapping("/bestbuilder/codigo")
 	public ResponseEntity<Object> verificarCodigo(@RequestParam(value = "codigo") String codigo) {
 		Optional<Usuario> usuarioRequest = usuarioRepository.findByCodigo(codigo);
 		JSONObject response = new JSONObject();
@@ -87,7 +139,7 @@ public class Controller {
 
 	
 
-	@PostMapping("/optima/cambiarContrasenya")
+	@PostMapping("/bestbuilder/cambiarContrasenya")
 	public ResponseEntity<Object> cambiarContrasenya(@RequestBody Usuario request) throws NoSuchAlgorithmException {
 		JSONObject response = new JSONObject();
 		Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(request.getCorreo());
@@ -111,47 +163,8 @@ public class Controller {
 		}
 	}
 
-	@PostMapping("/optima/registrar")
-	ResponseEntity<Object> registrar(@RequestBody Usuario nuevoUsuario)
-			throws NoSuchAlgorithmException, MessagingException, IOException {
-		JSONObject response = new JSONObject();
-		if (usuarioRepository.findByCorreo(nuevoUsuario.getCorreo().toLowerCase()).isPresent()) {
-			response.put("message", "USER ALREADY REGISTERED");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response.toString());
-		} else {
-			nuevoUsuario.setCorreo(nuevoUsuario.getCorreo().toLowerCase());
-			nuevoUsuario.setContrasenya(nuevoUsuario.encriptacionContrasenya(nuevoUsuario.getContrasenya()));
-			usuarioRepository.save(nuevoUsuario);
-			
-			
-			response.put("message", "Access the email to verify account");
-			return ResponseEntity.status(HttpStatus.CREATED).body(response.toString());
-		}
-	}
 
-	@PostMapping("/optima/login")
-	ResponseEntity<Object> login(@RequestBody Usuario usuarioAccede) throws NoSuchAlgorithmException {
-		Optional<Usuario> usuarioBaseDatos = usuarioRepository.comprobarLogin(usuarioAccede.getCorreo(),
-				usuarioAccede.encriptacionContrasenya(usuarioAccede.getContrasenya()));
-		JSONObject response = new JSONObject();
-		if (usuarioBaseDatos.isPresent()) {
-			Usuario usuario = usuarioBaseDatos.get();
-			if (usuario.getVerificado()) {
-				String token = UUID.randomUUID().toString();
-				usuario.setToken(token);
-				usuarioRepository.save(usuario);
-				response.put("token", token);
-				return ResponseEntity.status(HttpStatus.OK).body(response.toString());
-			}
-			response.put("message", "UNVERIFIED USER");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response.toString());
-		} else {
-			response.put("message", "USER IS NOT REGISTERED");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response.toString());
-		}
-	}
-
-	@PostMapping("/optima/logout")
+	@PostMapping("/bestbuilder/logout")
 	ResponseEntity<Object> logout(@RequestBody String requestBody) {
 		JSONObject jsonObject = new JSONObject(requestBody);
 		JSONObject response = new JSONObject();
@@ -170,7 +183,7 @@ public class Controller {
 
 	
 	
-	@PostMapping("/optima/cambiarNombre")
+	@PostMapping("/bestbuilder/cambiarNombre")
 	ResponseEntity<Object> cambiarNombre(@RequestBody String requestBody) {
 		JSONObject jsonObject = new JSONObject(requestBody);
 		JSONObject response = new JSONObject();
