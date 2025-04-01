@@ -11,32 +11,30 @@ const HomeNavegacion = (props) => {
         <PaperProvider>
             <Tab.Navigator screenOptions={{
                 tabBarStyle: {
-                    backgroundColor: '#101037',
+                    backgroundColor: 'black',
                     borderTopWidth: 0,
                 },
-                tabBarActiveTintColor: '#607cff',
+                tabBarActiveTintColor: '#228B22', // Cambiado a ForestGreen
                 tabBarInactiveTintColor: '#cdcdcd',
             }}>
                 <Tab.Screen
                     name="Home"
-                    component={MisProyectos}
+                    component={Home}
                     options={{
                         title: "Home",
                         tabBarLabel: "Home",
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="home" size={size} color={color} />
+                            <Ionicons name="home" size={size} color="#228B22" /> // Cambiado a ForestGreen
                         ),
                         headerShown: false
                     }}
                 />
                  <Tab.Screen
-                    name="Home1"
-                    component={Home}
+                    name="MisProyectos"
+                    component={MisProyectos}
                     options={{
-                        title: "Home1",
-                        tabBarLabel: "Home",
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="home" size={size} color={color} />
+                            <Ionicons name="add" size={size} color="#228B22" /> // Cambiado a ForestGreen
                         ),
                         headerShown: false
                     }}
@@ -46,9 +44,9 @@ const HomeNavegacion = (props) => {
                     component={Home}
                     options={{
                         title: "Home",
-                        tabBarLabel: "Home",
+                        tabBarLabel: "Ajustes",
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="home" size={size} color={color} />
+                            <Ionicons name="settings" size={size} color="#228B22" /> // Cambiado a ForestGreen
                         ),
                         headerShown: false
                     }}

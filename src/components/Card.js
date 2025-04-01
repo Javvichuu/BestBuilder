@@ -4,79 +4,76 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  ScrollView,
   Dimensions
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-
+import { ScrollView } from 'react-native-gesture-handler';
 const { height } = Dimensions.get('window');
 
 export default Card = (props) => {
+  const description = "Este es un texto muy largo que ocupa múltiples líneas...".repeat(10);
+
   return (
-    <Pressable onPress={props.onRutina}>
+    <Pressable onPress={props.onRutina} delayPressIn={0}>
       <ImageBackground
-        source={require('../assets/logoPNG.png')}
-        style={styles.container}
-        imageStyle={styles.backgroundImage}>
-        <View style={styles.overlay}>
-          <ScrollView 
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false}
-          >
+        source={{uri:props.imagenes}}
+        style={styles.containerImage}
+        imageStyle={styles.backgroundImage}
+        pointerEvents="box-none"
+      >
+        <View style={styles.container}>
             <Text style={styles.title}>Título</Text>
             <View style={styles.line} />
             
-            <View style={styles.descripcionContainer}>
-              <Text style={styles.descripcionText}>
-                Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.Descripción del servicio o actividad.
-              </Text>
+           <View style={styles.descripcionContainer}>
+                <ScrollView>
+                    <Text style={styles.descripcionText}>{description}</Text>
+                </ScrollView>
             </View>
-          </ScrollView>
+          </View>
 
           <View style={styles.bottomSection}>
             <View style={styles.employerContainer}>
-              <View style={styles.iconsContainer}>
+              <View style={styles.hoursContainer}>
+                <Icon name="location" size={35} color={'white'} />
+                <Text style={styles.hoursText}>Valenc.</Text>
+              </View>
+              <View style={styles.hoursContainer}>
                 <Icon name="user" size={35} color={'white'} />
-                <Icon name="user" size={35} color={'white'} />
-                <Icon name="user" size={35} color={'white'} />
-                <Icon name="user" size={35} color={'white'} />
+                <Text style={styles.hoursText}>4</Text>
+              </View>
+              <View style={styles.hoursContainer}>
+                <Icon name="calendar" size={35} color={'white'} />
+                <Text style={styles.hoursText}>4</Text>
               </View>
               
-              <View style={styles.hoursContainer}>
-                <Text style={styles.hoursText}>4</Text>
-                <Icon name="calendar" size={35} color={'white'} />
-              </View>
             </View>
             
             <View style={styles.precioContainer}>
               <Text style={styles.precio}>123€</Text>
             </View>
           </View>
-        </View>
       </ImageBackground>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerImage: {
     width: '100%',
-    minHeight: 300,  // Altura mínima
-    maxHeight: height * 0.7,  // Altura máxima (70% de la pantalla)
+    minHeight: 300,
+    maxHeight: height * 0.7,
     borderColor: '#33FF00',
     borderWidth: 2,
     marginTop: 10,
     overflow: 'hidden',
   },
-  overlay: {
+  container: {
     flex: 1,
-    backgroundColor: 'rgba(0, 50, 71, 0.7)',
-    padding: 15,
-    justifyContent: 'space-between', // Separa el contenido superior del inferior
-  },
-  scrollContent: {
-    flexGrow: 1,
-    alignItems: 'center',
+    padding: 10,
+    justifyContent: 'space-between',
+    alignContent:"center",
+    alignItems:"center"
   },
   title: {
     fontSize: 35,
@@ -92,36 +89,31 @@ const styles = StyleSheet.create({
   },
   descripcionContainer: {
     width: '95%',
-    backgroundColor: 'rgba(128, 128, 128, 0.5)',
+    backgroundColor: 'rgba(128, 128, 128, 0.8)',
     borderRadius: 8,
-    padding: 12,
+    padding: 10,
     marginBottom: 15,
+    height:115
   },
   descripcionText: {
     color: 'white',
     fontSize: 16,
     lineHeight: 22,
+    textAlign: 'justify',
+    flexShrink: 1,
   },
-  bottomSection: {
-    marginTop: 20,  // Más espacio arriba del precio
-  },
+
   employerContainer: {
-    width: '100%',
+    width: '94%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  iconsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    flex: 1,
-    gap: 15,
+    justifyContent: 'space-around',
+    marginBottom: 13,
+    marginLeft:7
   },
   hoursContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
+    gap: 4,
   },
   hoursText: {
     fontSize: 28,
@@ -130,16 +122,17 @@ const styles = StyleSheet.create({
   },
   precioContainer: {
     alignItems: 'flex-end',
-    marginTop: 10,  // Separación adicional del precio
-    paddingRight: 15,
+    width:"95%",
+    
   },
   precio: {
-    fontSize: 32,
-    color: '#228B22',
+    fontSize: 35,
+    color: '#32CD32',
     fontWeight: 'bold',
+    
   },
   backgroundImage: {
-    opacity: 0.5,
+    opacity: 0.4,
     resizeMode: 'cover',
   },
 });

@@ -3,10 +3,11 @@ import { View, Text, TouchableOpacity, FlatList, StyleSheet,ImageBackground} fro
 import { AntDesign, Feather } from "@expo/vector-icons";
 import Card from "../../components/Card";
 const projects = [
-  { id: 1, name: "Proyecto Alpha", description: "Descripción del proyecto Alpha" },
-  { id: 2, name: "Proyecto Beta", description: "Descripción del proyecto Beta" },
-  { id: 3, name: "Proyecto Gamma", description: "Descripción del proyecto Gamma" },
+  { id: 1, name: "Proyecto Alpha", description: "Descripción del proyecto Alpha",imagen:"https://blog.vpackage.net/files/1342/instalacion-parques-infantiles-de-exterior.jpg" },
+  { id: 2, name: "Proyecto Beta", description: "Descripción del proyecto Beta",imagen:"https://casasarquicenter.com/wp-content/uploads/2021/02/diseno-alicante-passivhaus.jpg" },
+  { id: 3, name: "Proyecto Gamma", description: "Descripción del proyecto Gamma",imagen:"https://arquitectura-sostenible.es/wp-content/uploads/2018/02/Cupa-Pizarras_casa-madera-840x530.jpg"},
 ];
+const imagenes = ["https://blog.vpackage.net/files/1342/instalacion-parques-infantiles-de-exterior.jpg","https://casasarquicenter.com/wp-content/uploads/2021/02/casas-pasivas-de-una-planta-1024x577.jpg","https://arquitectura-sostenible.es/wp-content/uploads/2018/02/Cupa-Pizarras_casa-madera-840x530.jpg"];
 
 export default function Dashboard() {
   return (
@@ -24,7 +25,7 @@ export default function Dashboard() {
         data={projects}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <Card/>
+          <Card imagenes={item.imagen}/>
         )}
       />
     </View>
