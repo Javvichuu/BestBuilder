@@ -75,7 +75,6 @@ export default function Login(props) {
                 secureTextEntry
               />
             </View>
-
             {contrasenyaHasErrors() && (
               <HelperText type="error">
                 Invalid password, You need 8 characters, a capital letter, a
@@ -98,7 +97,6 @@ export default function Login(props) {
                   <Text style={{ ...styles.textRegister, color: '#33FF00' }}> Registrate </Text>
               </Pressable>
             </View>
-            
           </View>
         </View>
       </View>
@@ -134,14 +132,17 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     color: 'white',
+        fontFamily: 'Roboto-Medium',
   },
   textLogin: {
     fontSize: 20,
     color: 'white',
+        fontFamily: 'Roboto-Medium',
   },
   textRegister: {
     fontSize: 18,
     color: 'white',
+        fontFamily: 'Roboto-Medium',
   },
   inputContainer: {
     flexDirection: 'column',

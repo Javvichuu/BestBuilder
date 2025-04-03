@@ -1,7 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from './Home';
-import MisProyectos from "./MisProyectos"
+import MisProyectos from "../CrearProyectos/MisProyectos";
+import CrearProyecto from "../CrearProyectos/CrearProyecto";
+import Navegacion from "../CrearProyectos/Navegacion";
 import { PaperProvider } from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
@@ -14,7 +16,7 @@ const HomeNavegacion = (props) => {
                     backgroundColor: 'black',
                     borderTopWidth: 0,
                 },
-                tabBarActiveTintColor: '#228B22', // Cambiado a ForestGreen
+                tabBarActiveTintColor: '#228B22',
                 tabBarInactiveTintColor: '#cdcdcd',
             }}>
                 <Tab.Screen
@@ -24,17 +26,17 @@ const HomeNavegacion = (props) => {
                         title: "Home",
                         tabBarLabel: "Home",
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="home" size={size} color="#228B22" /> // Cambiado a ForestGreen
+                            <Ionicons name="home" size={size} color="#228B22" />
                         ),
                         headerShown: false
                     }}
                 />
                  <Tab.Screen
                     name="MisProyectos"
-                    component={MisProyectos}
+                    component={Navegacion}
                     options={{
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="add" size={size} color="#228B22" /> // Cambiado a ForestGreen
+                            <Ionicons name="add" size={size} color="#228B22" />
                         ),
                         headerShown: false
                     }}
@@ -44,9 +46,9 @@ const HomeNavegacion = (props) => {
                     component={Home}
                     options={{
                         title: "Home",
-                        tabBarLabel: "Ajustes",
+                        tabBarLabel: "Perfil",
                         tabBarIcon: ({ color, size }) => (
-                            <Ionicons name="settings" size={size} color="#228B22" /> // Cambiado a ForestGreen
+                            <Ionicons name="person" size={size} color="#228B22" />
                         ),
                         headerShown: false
                     }}

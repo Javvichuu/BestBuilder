@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     marginBottom: 15,
+        fontFamily: 'Roboto-Medium',
   },
   textLogin: {
     fontSize: 18,

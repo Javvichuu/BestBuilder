@@ -2,25 +2,25 @@ import React from "react";
 import { View, Text, TouchableOpacity, FlatList, StyleSheet,ImageBackground} from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import Card from "../../components/Card";
+
 const projects = [
   { id: 1, name: "Proyecto Alpha", description: "Descripción del proyecto Alpha",imagen:"https://blog.vpackage.net/files/1342/instalacion-parques-infantiles-de-exterior.jpg" },
   { id: 2, name: "Proyecto Beta", description: "Descripción del proyecto Beta",imagen:"https://casasarquicenter.com/wp-content/uploads/2021/02/diseno-alicante-passivhaus.jpg" },
   { id: 3, name: "Proyecto Gamma", description: "Descripción del proyecto Gamma",imagen:"https://arquitectura-sostenible.es/wp-content/uploads/2018/02/Cupa-Pizarras_casa-madera-840x530.jpg"},
 ];
-const imagenes = ["https://blog.vpackage.net/files/1342/instalacion-parques-infantiles-de-exterior.jpg","https://casasarquicenter.com/wp-content/uploads/2021/02/casas-pasivas-de-una-planta-1024x577.jpg","https://arquitectura-sostenible.es/wp-content/uploads/2018/02/Cupa-Pizarras_casa-madera-840x530.jpg"];
+  const uriImagen =
+    'https://img.freepik.com/vector-gratis/fondo-degradado-oscuro-espacio-copia_53876-99548.jpg';
 
-export default function Dashboard() {
+
+export default function Home() {
   return (
+    <ImageBackground source={{ uri: uriImagen }} style={styles.background}>
     <View style={styles.container}>
-      {/* Encabezado */}
       <View style={styles.header}>
         <Text style={styles.title}>Home</Text>
-        <TouchableOpacity style={styles.bottom}>
-          <AntDesign name="plus" size={20} color="white" />
-        </TouchableOpacity>
+
       </View>
 
-      {/* Lista de proyectos */}
       <FlatList
         data={projects}
         keyExtractor={(item) => item.id.toString()}
@@ -29,21 +29,21 @@ export default function Dashboard() {
         )}
       />
     </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor:"#404040",
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 20,
     marginTop:"15%",
   },
   title: {
@@ -51,48 +51,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color:"white"
   },
-   bottom: {
-    backgroundColor: '#228B22',
-    justifyContent: 'center',
-    borderRadius: 5,
-    height: 50,
-    width: 50,
-    alignItems: 'center',
-  },
-  addButtonText: {
-    color: "white",
-    fontWeight: "bold",
-    marginLeft: 5,
-  },
-  card: {
-    backgroundColor: "white",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 3,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  cardDescription: {
-    fontSize: 14,
-    color: "gray",
-    marginTop: 4,
-  },
-  actions: {
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    marginTop: 10,
-  },
-  editButton: {
-    marginRight: 10,
-  },
-  deleteButton: {},
-    background: {
+background: {
     flex: 1,
     resizeMode: 'cover', 
     justifyContent: 'center',

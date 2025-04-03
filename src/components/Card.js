@@ -36,7 +36,7 @@ export default Card = (props) => {
             <View style={styles.employerContainer}>
               <View style={styles.hoursContainer}>
                 <Icon name="location" size={35} color={'white'} />
-                <Text style={styles.hoursText}>Valenc.</Text>
+                <Text style={styles.ubicacionText}>Valencia</Text>
               </View>
               <View style={styles.hoursContainer}>
                 <Icon name="user" size={35} color={'white'} />
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     maxHeight: height * 0.7,
     borderColor: '#33FF00',
     borderWidth: 2,
-    marginTop: 10,
+    marginTop: 20,
     overflow: 'hidden',
   },
   container: {
@@ -117,6 +117,10 @@ const styles = StyleSheet.create({
   },
   hoursText: {
     fontSize: 28,
+    color: 'white',
+    fontWeight: 'bold',
+  },ubicacionText: {
+    fontSize: 24,
     color: 'white',
     fontWeight: 'bold',
   },
