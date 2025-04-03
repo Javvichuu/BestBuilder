@@ -39,11 +39,7 @@ public class Controller {
 	@Value("${ip_api_bestbuilder}")
 	private String ipAPI;
 
-	@GetMapping("/ok")
-	public ResponseEntity<Object> ok() {
-		System.out.println("dasdfa");
-		return ResponseEntity.ok().body("hola");
-	}
+	
 	
 	@PostMapping("/bestbuilder/registrar")
 	ResponseEntity<Object> registrar(@RequestBody String body)
